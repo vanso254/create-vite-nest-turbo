@@ -1,0 +1,17 @@
+export function turboJsonTemplate() {
+    return JSON.stringify({
+        "$schema": "https://turbo.build/schema.json",
+        "tasks": {
+            "build": {
+                "dependsOn": ["^build"],
+                "outputs": ["dist/**"]
+            },
+            "dev": {
+                "cache": false,
+                "persistent": true
+            },
+            "lint": {},
+            "clean": { "cache": false }
+        }
+    }, null, 2);
+}
