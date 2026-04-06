@@ -1,5 +1,5 @@
 import { execSafe } from '../utils/exec.js';
-import { writeFile, ensureDir } from '../utils/fs.js';
+import { writeFile, ensureDir, removeFile } from '../utils/fs.js';
 
 export async function generateViteReactApp() {
     await ensureDir('apps/web');
@@ -8,6 +8,9 @@ export async function generateViteReactApp() {
     await execSafe('pnpm', ['create', 'vite', 'apps/web', '--template', 'react-ts'], {
         stdio: 'inherit'
     });
+
+    // Remove the nested .gitignore from Vite since we manage a root one
+    await removeFile('apps/web/.gitignore');
 
     // Enhance vite.config.ts with NestJS proxy
     const viteConfig = `import { defineConfig } from 'vite'
