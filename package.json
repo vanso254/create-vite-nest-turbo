@@ -1,11 +1,11 @@
 {
-  "name": "create-vite-nest-turbo",
+  "name": "create-vite-nest",
   "version": "1.0.0",
   "type": "module",
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "create-vite-nest-turbo": "./dist/index.js"
+    "create-vite-nest": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

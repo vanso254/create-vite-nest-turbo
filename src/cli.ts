@@ -5,7 +5,7 @@ import { logger } from './utils/logger.js';
 export const program = new Command();
 
 program
-    .name('create-vite-nest-turbo')
+    .name('create-vite-nest')
     .description('🚀 Scaffold a Turborepo monorepo with Vite+React + NestJS + pnpm')
     .version('1.0.0')
     .addCommand(createCommand());
