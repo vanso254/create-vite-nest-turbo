@@ -20,11 +20,8 @@ export async function generateNestJSApp() {
     const mainTs = await readFile('apps/api/src/main.ts', 'utf-8');
     const enhancedMain = mainTs.replace(
         'await app.listen(3000);',
-        `await app.listen(3000, '0.0.0.0');`
-    ).replace(
-        'import { NestFactory } from \'@nestjs/core\';',
-        `import { NestFactory } from '@nestjs/core';
-import { enableCors } from '@nestjs/common';`
+        `app.enableCors();
+  await app.listen(3000, '0.0.0.0');`
     );
     await writeFile('apps/api/src/main.ts', enhancedMain);
 }
