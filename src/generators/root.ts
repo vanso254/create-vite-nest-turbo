@@ -16,6 +16,7 @@ export async function generateRootConfigs() {
     await writeFile('package.json', JSON.stringify({
         name: "my-monorepo",
         private: true,
+        packageManager: "pnpm@9.0.0",
         scripts: {
             build: "turbo run build",
             dev: "turbo run dev",
