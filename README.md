@@ -107,31 +107,119 @@ my-app/
 └── tsconfig.base.json       # Shared TypeScript configuration
 ```
 
+## 🏗️ Architecture & Process Isolation
+
+### Development Environment
+
+The monorepo is designed to run frontend and backend in **separate processes** to prevent interference:
+
+- **`pnpm dev`**: Uses `concurrently` to run both services in isolated processes within the same terminal
+- **`pnpm run dev:backend`**: Runs only the NestJS backend in its own process
+- **`pnpm run dev:frontend`**: Runs only the Vite frontend in its own process
+
+Each service runs independently with:
+- Backend on `http://localhost:3000` (NestJS)
+- Frontend on `http://localhost:5173` (Vite dev server with API proxy)
+
+### Production Environment
+
+For production deployments:
+
+1. **Build Phase**: Both apps are built separately
+   - Frontend: Compiled to static files in `apps/web/dist`
+   - Backend: Compiled to JavaScript in `apps/api/dist`
+
+2. **Serve Phase**: 
+   - Backend serves the frontend static files (configure NestJS to serve from `apps/web/dist`)
+   - Or deploy them separately to your hosting platform
+
+### Process Isolation Benefits
+
+- ✅ No port conflicts between services
+- ✅ Independent restart capability
+- ✅ Separate logging streams
+- ✅ Can run in different terminal windows/shells
+- ✅ Container-friendly (each service can be containerized separately)
+
+## 📝 Available Scripts
+
+After creating your project, the following scripts are available in the root:
+
+### Development
+
+```bash
+# Start both frontend and backend concurrently (in separate processes)
+pnpm dev
+
+# Start only the backend (NestJS)
+pnpm run dev:backend
+
+# Start only the frontend (Vite + React)
+pnpm run dev:frontend
+
+# Start both apps using Turborepo (alternative to pnpm dev)
+pnpm run dev:all
+```
+
+### Production
+
+```bash
+# Build all applications
+pnpm build
+
+# Build only the frontend
+pnpm run build:frontend
+
+# Build only the backend
+pnpm run build:backend
+
+# Start the production backend server (after building)
+pnpm start
+
+# Preview the production frontend build
+pnpm run preview --filter=@my-monorepo/web
+```
+
+### Maintenance
+
+```bash
+# Lint all applications
+pnpm lint
+
+# Clean build artifacts
+pnpm clean
+```
+
+### Independent Service Control
+
+For running services in completely separate terminal windows/shells:
+
+**Terminal 1 - Backend:**
+```bash
+cd apps/api
+pnpm dev
+# Or for production:
+# pnpm build && pnpm start
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd apps/web
+pnpm dev
+# Or for production preview:
+# pnpm build && pnpm preview
+```
+
+This ensures that both services run in isolated processes and cannot interfere with each other.
+
 ## 🛠️ Generated Stack
 
 - **Frontend**: Vite + React + TypeScript
 - **Backend**: NestJS + TypeScript
 - **Package Manager**: pnpm with workspaces
 - **Build System**: Turborepo with remote caching support
+- **Process Management**: concurrently for isolated development processes
 - **Git**: Pre-configured `.gitignore`
-
-## 📝 Available Scripts
-
-After creating your project, the following scripts are available in the root:
-
-```bash
-# Development - Start all apps concurrently
-pnpm dev
-
-# Build all apps
-pnpm build
-
-# Lint all apps
-pnpm lint
-
-# Type-check all apps
-pnpm type-check
-```
 
 ## 🔧 Requirements
 

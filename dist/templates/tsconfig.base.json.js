@@ -1,0 +1,26 @@
+export function baseTsConfigTemplate() {
+    return JSON.stringify({
+        $schema: "https://json.schemastore.org/tsconfig",
+        display: "Default",
+        compilerOptions: {
+            composite: false,
+            declaration: true,
+            declarationMap: true,
+            esModuleInterop: true,
+            forceConsistentCasingInFileNames: true,
+            inlineSources: false,
+            isolatedModules: true,
+            moduleResolution: "bundler",
+            noUnusedLocals: false,
+            noUnusedParameters: false,
+            preserveWatchOutput: true,
+            skipLibCheck: true,
+            strict: true,
+            target: "ES2022",
+            lib: ["ES2022"],
+            module: "ESNext"
+        },
+        exclude: ["node_modules"]
+    }, null, 2);
+}
+//# sourceMappingURL=tsconfig.base.json.js.map

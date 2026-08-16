@@ -86,8 +86,10 @@ export function createCommand() {
                 logger.success(`\n✅ Monorepo "${projectName}" created successfully!\n`);
                 logger.info('Next steps:');
                 logger.info(`  cd ${projectName}`);
-                logger.info('  pnpm dev    # Start both apps concurrently');
-                logger.info('  pnpm build  # Build all apps');
+                logger.info('  pnpm dev              # Start both apps in separate processes');
+                logger.info('  pnpm run dev:backend  # Start only backend');
+                logger.info('  pnpm run dev:frontend # Start only frontend');
+                logger.info('  pnpm build            # Build all apps for production');
                 logger.info('\n📚 Docs: https://turborepo.org/docs\n');
 
             } catch (error: any) {
