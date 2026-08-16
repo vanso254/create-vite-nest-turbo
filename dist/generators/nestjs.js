@@ -1,11 +1,9 @@
 import { execSafe } from '../utils/exec.js';
 import { writeFile, readFile } from '../utils/fs.js';
-
 export async function generateNestJSApp() {
     await execSafe('pnpm', ['dlx', '@nestjs/cli', 'new', 'apps/api', '--package-manager', 'pnpm', '--skip-git', '--skip-install'], {
         stdio: 'inherit'
     });
-
     // Update NestJS package.json scripts and name for Turborepo
     const apiPkg = JSON.parse(await readFile('apps/api/package.json', 'utf-8'));
     apiPkg.name = '@my-monorepo/api';
@@ -17,13 +15,10 @@ export async function generateNestJSApp() {
         clean: "rm -rf dist"
     };
     await writeFile('apps/api/package.json', JSON.stringify(apiPkg, null, 2));
-
     // Enable CORS for frontend communication
     const mainTs = await readFile('apps/api/src/main.ts', 'utf-8');
-    const enhancedMain = mainTs.replace(
-        'await app.listen(3000);',
-        `app.enableCors();
-  await app.listen(3000, '0.0.0.0');`
-    );
+    const enhancedMain = mainTs.replace('await app.listen(3000);', `app.enableCors();
+  await app.listen(3000, '0.0.0.0');`);
     await writeFile('apps/api/src/main.ts', enhancedMain);
 }
+//# sourceMappingURL=nestjs.js.map

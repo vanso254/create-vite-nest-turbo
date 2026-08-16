@@ -4,14 +4,12 @@ import { pnpmWorkspaceTemplate } from '../templates/pnpm-workspace.yaml.js';
 import { baseTsConfigTemplate } from '../templates/tsconfig.base.json.js';
 import { npmrcTemplate } from '../templates/npmrc.js';
 import { gitignoreTemplate } from '../templates/gitignore.js';
-
 export async function generateRootConfigs() {
     await writeFile('turbo.json', turboJsonTemplate());
     await writeFile('pnpm-workspace.yaml', pnpmWorkspaceTemplate());
     await writeFile('tsconfig.json', baseTsConfigTemplate());
     await writeFile('.npmrc', npmrcTemplate());
     await writeFile('.gitignore', gitignoreTemplate());
-
     // Root package.json
     await writeFile('package.json', JSON.stringify({
         name: "my-monorepo",
@@ -37,3 +35,4 @@ export async function generateRootConfigs() {
         }
     }, null, 2));
 }
+//# sourceMappingURL=root.js.map
